@@ -56,18 +56,89 @@ enum { BEPO, QWERTY, GAMING, NUMPAD, FUNCTION }; // layers
  * Beware that the include directives MUST be on a line by themselves.
  */
 
-const Key keymaps[][ROWS][COLS] PROGMEM = {
-	[BEPO] =
-#include "layer-celt-bepo-parameterized.h"
-  , [QWERTY] =
-#include "layer-celt-qwerty-parameterized.h"
-  , [GAMING] =
-#include "layer-celt-gaming-parameterized.h"
+/* This comment temporarily turns off astyle's indent enforcement
+ *   so we can make the keymaps actually resemble the physical key layout better
+ */
+// *INDENT-OFF*
+
+KEYMAPS(
+	[BEPO] = KEYMAP_STACKED
+  (___,               Key_frb_Quote,   Key_frb_DeOQuote, Key_frb_DeCQuote, Key_frb_Oparenthesi, Key_frb_Cparenthesi, Key_frb_Dollar,
+   LockLayer(NUMPAD), Key_frb_B,       Key_frb_E_Acute,  Key_frb_P,        Key_frb_O,           Key_frb_E_Grave,     Key_Tab,
+   Key_frb_W,         Key_frb_A,       Key_frb_U,        Key_frb_I,        Key_frb_E,           Key_frb_Comma,
+   Key_frb_E_umlaut,  Key_frb_A_Grave, Key_frb_Y,        Key_frb_X,        Key_frb_Period,      Key_frb_K,           Key_Escape,
+   Key_LeftAlt,   Key_Backspace,   Key_LeftShift,    Key_LeftGui,
+   ShiftToLayer(FUNCTION),
+
+   Key_frb_Percent,   Key_frb_At,         Key_frb_Plus, Key_frb_Minus, Key_frb_Slash, Key_frb_Multiply, Key_frb_Equals,
+   Key_Enter,         Key_frb_Circumflex, Key_frb_V,    Key_frb_D,     Key_frb_L,     Key_frb_J,        Key_frb_Z,
+                      Key_frb_C,          Key_frb_T,    Key_frb_S,     Key_frb_R,     Key_frb_N,        Key_frb_M,
+   Key_LEDEffectNext, Key_frb_Question,   Key_frb_Q,    Key_frb_G,     Key_frb_H,     Key_frb_F,        Key_frb_C_Cedilla,
+   Key_LeftControl, Key_RightShift, Key_Spacebar, Key_frb_ALTGR,
+   ShiftToLayer(FUNCTION)),
+
+  [QWERTY] = KEYMAP_STACKED
+  (___,             Key_1, Key_2, Key_3, Key_4, Key_5, Key_LEDEffectNext,
+   Key_Quote,       Key_Q, Key_W, Key_E, Key_R, Key_T, Key_Tab,
+   Key_PageUp,      Key_A, Key_S, Key_D, Key_F, Key_G,
+   Key_PageDown,    Key_Z, Key_X, Key_C, Key_V, Key_B, Key_Escape,
+   Key_LeftControl, Key_Backspace, Key_LeftGui, Key_LeftShift,
+   ShiftToLayer(FUNCTION),
+
+   M(MACRO_ANY),  Key_6, Key_7, Key_8,     Key_9,      Key_0,         LockLayer(NUMPAD),
+   Key_Enter,     Key_Y, Key_U, Key_I,     Key_O,      Key_P,         Key_Equals,
+                  Key_H, Key_J, Key_K,     Key_L,      Key_Semicolon, Key_Quote,
+   Key_RightAlt,  Key_N, Key_M, Key_Comma, Key_Period, Key_Slash,     Key_Minus,
+   Key_RightShift, Key_LeftAlt, Key_Spacebar, Key_RightControl,
+   ShiftToLayer(FUNCTION)),
+
+  [GAMING] = KEYMAP_STACKED
+  (___,             Key_1, Key_2, Key_3, Key_4, Key_5, Key_LEDEffectNext,
+   Key_Tab,         Key_Q, Key_W, Key_E, Key_R, Key_T, Key_Y,
+   Key_LeftShift,   Key_A, Key_S, Key_D, Key_F, Key_G,
+   Key_LeftShift,   Key_Z, Key_X, Key_C, Key_V, Key_B, Key_Escape,
+   Key_LeftControl, Key_Spacebar, Key_LeftAlt, Key_LeftShift,
+   ShiftToLayer(FUNCTION),
+
+   M(MACRO_ANY),  Key_6, Key_7, Key_8,     Key_9,      Key_0,         LockLayer(NUMPAD),
+   Key_Enter,     Key_Y, Key_U, Key_I,     Key_O,      Key_P,         Key_Equals,
+                  Key_H, Key_J, Key_K,     Key_L,      Key_Semicolon, Key_Quote,
+   Key_RightAlt,  Key_N, Key_M, Key_Comma, Key_Period, Key_Slash,     Key_Minus,
+   Key_RightShift, Key_LeftAlt, Key_Backspace, Key_RightControl,
+   ShiftToLayer(FUNCTION)),
   
-  , [NUMPAD] =
-#include "layer-celt-numpad.h"
-  , [FUNCTION] =
-#include "layer-celt-function.h"
 
-};
 
+  [NUMPAD] = KEYMAP_STACKED
+   (___,    ___,        ___,        ___,        ___,        ___,        ___,
+    ___,    ___,        ___,        ___,        ___,        ___,        ___,
+    ___,    ___,        ___,        ___,        ___,        ___,
+    ___,    ___,        ___,        ___,        ___,        ___,        ___,
+    ___, ___, ___, ___,
+	___,
+
+   M(MACRO_VERSION_INFO),   Key_Tab,    Key_Keypad7,    Key_Keypad8,    Key_Keypad9,        Key_KeypadSubtract, ___,
+   ___,                     Key_Tab,    Key_Keypad4,    Key_Keypad5,    Key_Keypad6,        Key_KeypadAdd,      ___,
+                            ___,        Key_Keypad1,    Key_Keypad2,    Key_Keypad3,        Key_Equals,         Key_Enter,
+   ___,                     Key_Insert, Key_Keypad0,    Key_KeypadDot,  Key_KeypadMultiply, Key_KeypadDivide,   Key_Enter,
+   ___, ___, ___, ___,
+   ___),
+
+  [FUNCTION] = KEYMAP_STACKED
+  (___,     Key_F1,        Key_F2,        Key_F3,         Key_F4,        Key_F5,       Key_Insert,
+   Key_Tab, Key_Home,      Key_UpArrow,   Key_End,        Key_PageUp,    ___,          Key_Delete,
+   ___,     Key_LeftArrow, Key_DownArrow, Key_RightArrow, Key_PageDown,  ___,
+   ___,     Key_frb_Undo,  Key_frb_Cut,   Key_frb_Copy,   Key_frb_Paste, Key_frb_Redo, LockLayer(GAMING),
+   ___, Key_Delete, Key_CapsLock, Key_PcApplication,
+   ___,
+
+   Key_PrintScreen,   Key_F6,         Key_F7,                   Key_F8,                   Key_F9,                     Key_F10,                 Key_F11,
+   System_Sleep,      Key_mouseBtnL,  Key_mouseUp,              Key_mouseBtnR,            Key_mouseWarpNW,            Key_mouseWarpNE,         Key_F12,
+                      Key_mouseL,     Key_mouseDn,              Key_mouseR,               Key_mouseWarpSW,            Key_mouseWarpSE,         Consumer_Stop,
+   LockLayer(QWERTY), Consumer_Mute,  Consumer_VolumeDecrement, Consumer_VolumeIncrement, Consumer_ScanPreviousTrack, Consumer_PlaySlashPause, Consumer_ScanNextTrack,
+   ___, Key_RightShift, Key_Enter, ___,
+   ___)
+)
+
+/* Re-enable astyle's indent enforcement */
+// *INDENT-ON*
